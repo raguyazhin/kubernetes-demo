@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - image: mysql
+        name: mysql-pod 
+        securityContext:
+          runAsUser: 1001
+          runAsGroup: 1001
+        envFrom:
+          - secretRef:
+              name: db-secret
+        ports:
+        - containerPort: 3306

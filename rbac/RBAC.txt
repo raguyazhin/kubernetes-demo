@@ -1,0 +1,27 @@
+
+openssl genrsa -out ragu.key 2048
+
+openssl req -new -key ragu.key -out ragu.csr -subj "/CN=ragu/O=dev"
+
+openssl x509 -req -CA CA_LOCATION/ca.crt -CAkey CA_LOCATION/ca.key -CAcreateserial -days 500 -in ragu.csr -out ragu.crt
+
+kubectl config set-credentials ragu --client-certificate=/home/ragu/.certs/ragu.crt  --client-key=/home/ragu/.certs/ragu.key
+
+kubectl config set-context ragu-context --cluster=minikube --namespace=default --user=ragu
+
+kubectl config use-context ragu-context 
+
+
+create role
+create role binding = subject + role
+
+subject - could be User Group or Service Account
+role  - actions ( create , read update pod ) 
+
+
+Role and RoleBinding Namespace level
+
+create ClusterRole 
+create ClusterRoleBinding = subject + role
+
+Clster Level

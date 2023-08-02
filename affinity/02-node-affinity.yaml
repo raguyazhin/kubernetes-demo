@@ -1,0 +1,30 @@
+#kubectl label node kube-n2-cali type=dev
+#kubectl label node kube-n1-cali tier=frontend
+
+#kubectl label node kube-n1-cali tier-
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: with-node-affinity
+spec:
+  affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 25
+        preference:
+          matchExpressions:
+          - key: tier
+            operator: In
+            values:
+            - backend 
+      - weight: 75
+        preference:
+          matchExpressions:
+          - key: tier
+            operator: In
+            values:
+            - backend     
+  containers:
+  - name: with-node-affinity
+    image: nginx

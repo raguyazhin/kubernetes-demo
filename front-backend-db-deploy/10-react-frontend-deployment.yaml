@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-frontend-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: reactfrontend
+  template:
+    metadata:
+      labels:
+        app: reactfrontend
+    spec:
+      containers:
+      - name: frontendapp
+        image: raguyazhin/react-frontend-app:1.0.0
+        ports:
+        - containerPort: 2000
+        env:
+          - name: REACT_APP_BACKEND_API_URL
+            value: "http://172.17.17.76:5000"

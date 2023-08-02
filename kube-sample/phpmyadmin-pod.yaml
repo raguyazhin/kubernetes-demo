@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: phpmyadmin
+  labels:
+    name: phpmyadmin
+spec:
+  containers:
+  - name: phpmyadmin
+    image: phpmyadmin
+    envFrom:
+      - secretRef:
+          name: phpmyadmin-secret
+      - configMapRef:
+          name: phpmyadmin-config
+    resources: {}
+   

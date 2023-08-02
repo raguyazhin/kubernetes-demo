@@ -1,0 +1,58 @@
+#https://www.debontonline.com/2020/11/kubernetes-part-11-how-to-configure.html
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: mysql 
+  serviceName: "mysql"
+  replicas: 3 
+  template:
+    metadata:
+      labels:
+        app: mysql 
+    spec:
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: mysql
+        image: mysql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: password
+        - name: MYSQL_DATABASE
+          value: products
+        - name: MYSQL_USER
+          value: myuser
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: password
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql-volume
+          mountPath: /var/lib/mysql
+      # volumes:
+      # - name: mysql-volume
+      #   persistentVolumeClaim:
+      #     claimName: mysql-pv-nfs-claim
+  volumeClaimTemplates:
+  - metadata:
+      name: mysql-volume
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 1Gi
+      storageClassName: nfs-client
+  

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "kube-ctl-pod"
+  namespace: default
+  labels:
+    app: "kube-ctl"
+spec:
+  serviceAccount: test-sa
+  containers:
+  - name: kube-ctl
+    image: bitnami/kubectl:latest
+    command: ["sleep", "5000"]      

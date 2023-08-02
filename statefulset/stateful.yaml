@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: nodeapp-sfs
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: nodeapp 
+  serviceName: "nodeapp-headless"
+  replicas: 3 
+  template:
+    metadata:
+      labels:
+        app: nodeapp 
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: nodeapp
+        image: raguyazhin/simple-node-app:1.0.0
+        ports:
+        - containerPort: 80
+          name: web
