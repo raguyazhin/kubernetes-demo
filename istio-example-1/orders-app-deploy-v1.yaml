@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orders-app-v1
+  labels:
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ordersapp
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: ordersapp
+        version: v1
+    spec:
+      containers:
+      - name: ordersapp
+        image: raguyazhin/orders-app:1.0
+        ports:
+        - containerPort: 3000

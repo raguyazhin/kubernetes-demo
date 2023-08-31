@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cart-app-v2
+  labels:
+    version: v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cartapp
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: cartapp
+        version: v2
+    spec:
+      containers:
+      - name: cartapp
+        image: raguyazhin/cart-app:2.0
+        ports:
+        - containerPort: 3000

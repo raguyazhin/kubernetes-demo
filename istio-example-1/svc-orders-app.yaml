@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-orders-app
+  labels:
+    app: ordersapp
+spec:
+  selector:
+    app: ordersapp
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 80
+    targetPort: 3000

@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  deploy-podv3
+  namespace: default
+  labels:
+    app: v3
+spec:
+  selector:
+    matchLabels:
+      app: v3
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: v3
+    spec:
+      containers:
+      - name: mycontainer
+        image: "raguyazhin/simple-node-app:3.0.0"
+        ports:
+        - containerPort:  3000
+          name:  http

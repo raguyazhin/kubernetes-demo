@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ping
+spec:
+  containers:
+  - name: ping-container
+    image: alpine:latest
+    command: 
+      - sleep
+      - "3600"
+    securityContext:
+      capabilities:
+        add:
+        - NET_RAW
+        drop:
+        - ALL

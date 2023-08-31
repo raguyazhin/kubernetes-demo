@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-cart-app
+  labels:
+    app: cartapp
+spec:
+  selector:
+    app: cartapp
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 80
+    targetPort: 3000
